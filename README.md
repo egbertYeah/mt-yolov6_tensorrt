@@ -112,3 +112,10 @@ python deploy/DEEPSTREAM/tensorrt_dynamic/eval_yolov6.py
  |Average Recall|     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.266|
  |Average Recall|     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.522|
  |Average Recall|     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.619|
+
+
+ # Related Repository
+ - https://github.com/Linaom1214/tensorrt-python
+ - https://github.com/spacewalk01/tensorrt-yolov6
+ - https://github.com/DataXujing/YOLOv6
+ - https://github.com/xzacrhhh/yolov6-trt
