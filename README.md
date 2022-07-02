@@ -5,6 +5,42 @@
  - NVIDIA T4
  - tensorrt8.0
  - deepstream6.0
+
+ # How to generate YOLOv6 ONNX
+ ### copy file to YOLOv6 repository
+ ```shell
+ cp export_onnx.py YOLOv6/deploy/ONNX/
+ cp effidehead.py YOLOv6/yolov6/models/
+```
+### Export ONNX file
+```shell
+python deploy/ONNX/export_onnx.py --weights yolov6s.pt --img 640 --batch 1 --tensorrt
+```
+# Modification in YOLOv6 Files
+ ### Modify in YOLOv6/deploy/ONNX/export_onnx.py
+```python
+line29:    parser.add_argument('--tensorrt', action='store_true', help='set Detect() tensorrt=True')
+line59:    m.tensorrt = args.tensorrt
+line67:    if(args.tensorrt):
+            LOGGER.info('\n export ONNX file for tensorrt engine...')
+            torch.onnx.export(model, img, export_file, verbose=False, opset_version=12,
+                          training=torch.onnx.TrainingMode.EVAL,
+                          do_constant_folding=True,
+                          input_names=['images'],
+                          output_names=['yololayer_002', 'yololayer_001', 'yololayer_000'],
+                        #   output_names=['outputs'],
+                         )
+```
+
+### Modify in YOLOv6/yolov6/models/effidehead.py
+```python
+line12:     def __init__(self, num_classes=80, anchors=1, num_layers=3, inplace=True, tensorrt=False, head_layers=None):  # detection layer
+line26:     self.tensorrt = tensorrt
+line76:         if(self.tensorrt):  # <---- add by yeah
+                    z.append(y)
+                    continue
+line95:     if(self.tensorrt): return z         # <--- add by yeah
+```
  
  # TensorRT Inference Command
 
