@@ -150,6 +150,26 @@ python deploy/DEEPSTREAM/tensorrt_dynamic/eval_yolov6.py
  |Average Recall|     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.619|
 
 
+# Deepstream Inference
+## copy engine file to deepstream folder
+```shell
+cp path-to-tensorrt-engine deepstream
+e.g cp yolov6s.trt deepstream
+```
+## deepstream infer
+```shell
+cd deepstream
+export CUDA_VER=11.4 # for dGPU   CUDA_VER=11.4 for Jetson
+make -j32
+cd ..
+# video inference , output file: output_yolov6.mp4
+deepstream-app -c deepstream_app_config_yoloV6.txt
+
+```
+
+# Deepstream Video Demo
+<iframe height=720 width=1280 src="./deepstream/­output_yolov6.mp4">
+
  # Related Repository
  - https://github.com/Linaom1214/tensorrt-python
  - https://github.com/spacewalk01/tensorrt-yolov6
